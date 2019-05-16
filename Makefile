@@ -7,6 +7,9 @@ build:
 install:
 	install -m755 keyto /usr/bin/keyto
 
+index:
+	markdown README.md >index.html
+
 all: fmt win lin linarm
 
 fmt:
