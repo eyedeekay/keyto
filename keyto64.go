@@ -6,7 +6,7 @@ import (
 )
 
 import (
-	"github.com/eyedeekay/keyto64/convert"
+	"github.com/eyedeekay/keyto/convert"
 )
 
 func main() {
