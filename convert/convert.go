@@ -1,11 +1,11 @@
 package i2pdest
 
 import (
+	"crypto/sha256"
 	"encoding/base32"
 	"encoding/base64"
-	"crypto/sha256"
-    "encoding/binary"
-    "strings"
+	"encoding/binary"
+	"strings"
 )
 
 var (
@@ -16,15 +16,15 @@ var (
 // Base32 returns the base32 address corresponding to the destination key
 func Base32(c string) (string, error) {
 	hash := sha256.New()
-    b64, err := Base64(c)
+	b64, err := Base64(c)
 	if err != nil {
-        return "", err
-    }
-    sb64, err := i2pB64enc.DecodeString(b64)
+		return "", err
+	}
+	sb64, err := i2pB64enc.DecodeString(b64)
 	if err != nil {
-        return "", err
-    }
-    hash.Write([]byte(sb64))
+		return "", err
+	}
+	hash.Write([]byte(sb64))
 	return strings.ToLower(strings.Replace(i2pB32enc.EncodeToString(hash.Sum(nil)), "=", "", -1)), nil
 }
 
@@ -32,8 +32,8 @@ func Base32(c string) (string, error) {
 func Base64(c string) (string, error) {
 	s, err := i2pB64enc.DecodeString(c)
 	if err != nil {
-        return "", err
-    }
-    alen := binary.BigEndian.Uint16(s[385:387])
+		return "", err
+	}
+	alen := binary.BigEndian.Uint16(s[385:387])
 	return i2pB64enc.EncodeToString(s[:387+alen]), nil
 }
